@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+group = 'com.sergeineretin.shift'
+version = '0.1.0-dev'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+checkstyle {
+    toolVersion = '10.3.3'
+    configFile = rootProject.file('checkstyle.xml')
+    sourceSets = [sourceSets.main]
+    showViolations = true
+    ignoreFailures = false
+}
+
+checkstyleTest {
+    enabled = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.destination rootProject.file('build/reports/checkstyle.html')
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
