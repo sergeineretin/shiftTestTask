@@ -29,13 +29,14 @@ public class Command {
                 addFilename(filename);
             }
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e);
         }
     }
 
     private List<String> removeAllButFilenamesFromArgs() throws IllegalArgumentException {
         args.remove(Options.getStatisticsSimple());
         args.remove(Options.getStatisticsFull());
+        args.remove(Options.getPrefix());
         args.remove(Options.getPathOfResults());
         args.remove(path.toString());
         args.remove(prefix);
@@ -49,7 +50,7 @@ public class Command {
             Path path = Paths.get(filenameString);
             filenames.add(path);
         } catch (InvalidPathException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
     }
 
@@ -92,7 +93,7 @@ public class Command {
                 return args.get(optionIndex + 1);
             }
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
         return "";
     }
@@ -103,7 +104,7 @@ public class Command {
         try {
             return Paths.get(pathString);
         } catch (InvalidPathException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
         return null;
     }
