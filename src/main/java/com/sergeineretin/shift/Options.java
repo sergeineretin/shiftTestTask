@@ -1,10 +1,10 @@
 package com.sergeineretin.shift;
 
 public class Options {
-    private static String statisticsFull = "-f";
-    private static String statisticsSimple = "-s";
-    private static String pathOfResults = "-o";
-    private static String prefix = "-p";
+    private static final String statisticsFull = "-f";
+    private static final String statisticsSimple = "-s";
+    private static final String pathOfResults = "-o";
+    private static final String prefix = "-p";
 
     public static boolean isOption(final String string) {
         return string.equals(statisticsFull)
