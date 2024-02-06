@@ -1,70 +1,45 @@
 package com.sergeineretin.shift;
 
-import java.io.IOException;
+import com.sergeineretin.shift.filters.DoublesFilter;
+import com.sergeineretin.shift.filters.FilterList;
+import com.sergeineretin.shift.filters.IntegersFilter;
+import com.sergeineretin.shift.filters.StringsFilter;
+import com.sergeineretin.shift.read.FileRead;
+
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class FileFiltering {
-    private ArrayList<Integer> integers = new ArrayList<Integer>();
-    private ArrayList<Double> doubles = new ArrayList<Double>();
-    private ArrayList<String> strings = new ArrayList<String>();
-    private Command command;
+    private final Command command;
+    private FileRead fileRead;
     public FileFiltering(final String[] args) {
         command = new Command(args);
     }
     public void execute() {
-        filterDataFromFiles();
-        System.out.println();
-    }
-
-    private void filterDataFromFiles() {
-        for (Path path
-                : command.getFilenames()) {
-              List<String> dataFromFile = readDataFromFile(path);
-              filterData(dataFromFile);
+        FilterList filter = genFilter();
+        for (Path path : command.getFilenames()) {
+            fileRead = new FileRead(path.toFile());
+            writeStream(filter);
         }
 
     }
 
-    private void filterData(final List<String> dataFromFile) {
-        for (String data
-                : dataFromFile) {
-            addDataToSuitableList(data);
-        }
-    }
-
-    private void addDataToSuitableList(final String data) {
+    private void writeStream(final FilterList filter) {
         try {
-            addDataToNumberTypeLists(data);
-        } catch (NumberFormatException e) {
-            strings.add(data);
-        }
-    }
-
-    private void addDataToNumberTypeLists(final String data) throws NumberFormatException {
-        double value = Double.parseDouble(data);
-        if (value % 1 == 0.0 && Integer.MAX_VALUE >= value && Integer.MIN_VALUE <= value) {
-            integers.add((int) value);
-        } else {
-            doubles.add(value);
-        }
-    }
-
-
-    private List<String> readDataFromFile(final Path path) {
-        List<String> dataFromFile = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(path);
-            scanner.useDelimiter("\n");
-            while (scanner.hasNext()) {
-                 dataFromFile.add(scanner.nextLine());
+            String string;
+            while ((string = fileRead.read()) != null) {
+                filter.apply(string);
             }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } finally {
+            fileRead.close();
         }
-        return dataFromFile;
+        filter.close();
+    }
+    private FilterList genFilter() {
+        FilterList filterList = new FilterList();
+        filterList.add(new IntegersFilter(command));
+        filterList.add(new DoublesFilter(command));
+        filterList.add(new StringsFilter(command));
+        return filterList;
     }
 
 }
