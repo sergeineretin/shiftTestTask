@@ -10,7 +10,9 @@ public class IntegersFilter implements Filter {
     private final String regex = "^\\d+$";
     private FileWrite fileWrite;
     public IntegersFilter(final Command command) {
-        String pathName = command.getPath().toString() + command.getPrefix() + "integers.txt";
+        String pathName = command.getPath().toString() + "\\"
+                    + command.getPrefix() + "integers.txt";
+
         fileWrite = new FileWrite(new File(pathName));
     }
 

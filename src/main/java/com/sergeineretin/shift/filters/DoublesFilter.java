@@ -13,7 +13,9 @@ public class DoublesFilter implements Filter {
 
 
     public DoublesFilter(final Command command) {
-        String pathName = command.getPath().toString() + command.getPrefix() + "doubles.txt";
+        String pathName = command.getPath().toString() + "\\"
+                + command.getPrefix() + "doubles.txt";
+
         fileWrite = new FileWrite(new File(pathName));
     }
 

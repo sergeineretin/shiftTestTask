@@ -71,9 +71,11 @@ public class Command {
     private void setPath() {
         String pathString = getStringOfPath();
         path = getValidatedPath(pathString);
+        args.remove(pathString);
     }
     private String getStringOfPath() {
         if (isThereOptionOnCommand(Options.getPathOfResults())) {
+
             return getStringFollowingOption(Options.getPathOfResults());
         } else {
             return "";
@@ -102,7 +104,7 @@ public class Command {
     }
     private Path getValidatedPath(final String pathString) {
         try {
-            return Paths.get(pathString);
+            return Paths.get(Paths.get("").toAbsolutePath() + pathString);
         } catch (InvalidPathException e) {
             System.err.println(e);
         }

@@ -12,7 +12,9 @@ public class StringsFilter implements Filter {
     private final String doublesRegex = "-?\\d+(\\.\\d+)?(E[+-]?\\d+)?";
 
     public StringsFilter(final Command command) {
-        String pathName = command.getPath().toString() + command.getPrefix() + "strings.txt";
+        String pathName = command.getPath().toString() + "\\"
+                + command.getPrefix() +  "strings.txt";
+
         fileWrite = new FileWrite(new File(pathName));
     }
 
