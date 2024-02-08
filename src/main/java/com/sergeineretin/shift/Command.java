@@ -1,5 +1,6 @@
 package com.sergeineretin.shift;
 
+import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -104,11 +105,16 @@ public class Command {
     }
     private Path getValidatedPath(final String pathString) {
         try {
-            return Paths.get(Paths.get("").toAbsolutePath() + pathString);
+            Path path = Paths.get(pathString).toAbsolutePath();
+            if (Files.exists(path)) {
+                return path;
+            } else {
+                return Paths.get(Paths.get("").toAbsolutePath() + pathString);
+            }
         } catch (InvalidPathException e) {
             System.err.println(e);
         }
-        return null;
+        return Paths.get("").toAbsolutePath();
     }
     public Path getPath() {
         return path;
