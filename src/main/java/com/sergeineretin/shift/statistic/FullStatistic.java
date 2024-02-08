@@ -5,8 +5,8 @@ public class FullStatistic extends Statistic {
     private double maxDouble = Double.MIN_VALUE;
     private long minInteger = Long.MAX_VALUE;
     private long maxInteger = Long.MIN_VALUE;
-    private String minString = "";
-    private String maxString = "";
+    private int minString = Integer.MAX_VALUE;
+    private int maxString = Integer.MIN_VALUE;
     private int numberOfIntegers = 0;
     private int numberOfDoubles = 0;
     private int numberOfStrings = 0;
@@ -36,11 +36,11 @@ public class FullStatistic extends Statistic {
     @Override
     public void update(final String data) {
         numberOfStrings++;
-        if (data.length() < minString.length() || minString.isEmpty()) {
-            minString = data;
+        if (data.length() < minString) {
+            minString = data.length();
         }
-        if (data.length() >= maxString.length()) {
-            maxString = data;
+        if (data.length() >= maxString) {
+            maxString = data.length();
         }
     }
 
@@ -49,7 +49,7 @@ public class FullStatistic extends Statistic {
         String message = "";
         if (numberOfStrings > 0) {
             message += "strings: number = " + numberOfStrings
-                    + ", max = \"" + maxString + "\", min = \"" + minString + "\"\n";
+                    + ", max = " + maxString + ", min = " + minString + "\n";
         }
         if (numberOfDoubles > 0) {
             message += "doubles: number = " + numberOfDoubles
