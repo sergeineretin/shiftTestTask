@@ -104,17 +104,20 @@ public class Command {
         return args.contains(option);
     }
     private Path getValidatedPath(final String pathString) {
+        Path path = Paths.get(pathString).toAbsolutePath();
         try {
-            Path path = Paths.get(pathString).toAbsolutePath();
             if (Files.exists(path)) {
                 return path;
-            } else {
+            } else if (Files.exists(Paths.get(Paths.get("").toAbsolutePath() + pathString))) {
                 return Paths.get(Paths.get("").toAbsolutePath() + pathString);
+            } else {
+                path = Paths.get("").toAbsolutePath();
+                throw new IllegalArgumentException("Specified path " + pathString + " not found.");
             }
-        } catch (InvalidPathException e) {
+        }  catch (IllegalArgumentException e) {
             System.err.println(e);
         }
-        return Paths.get("").toAbsolutePath();
+        return path;
     }
     public Path getPath() {
         return path;
