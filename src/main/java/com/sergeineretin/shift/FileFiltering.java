@@ -20,7 +20,8 @@ public class FileFiltering {
             fileRead = new FileRead(path.toFile());
             writeStream(filter);
         }
-
+        System.out.println(filter.getStatistic());
+        filter.close();
     }
 
     private void writeStream(final FilterList filter) {
@@ -32,10 +33,9 @@ public class FileFiltering {
         } finally {
             fileRead.close();
         }
-        filter.close();
     }
     private FilterList genFilter() {
-        FilterList filterList = new FilterList();
+        FilterList filterList = new FilterList(command.getStatisticsMode());
         filterList.add(new IntegersFilter(command));
         filterList.add(new DoublesFilter(command));
         filterList.add(new StringsFilter(command));

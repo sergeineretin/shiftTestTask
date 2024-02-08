@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class IntegersFilter implements Filter {
-    private final String regex = "^\\d+$";
     private FileWrite fileWrite;
     public IntegersFilter(final Command command) {
         String pathName = command.getPath().toString() + "\\"
@@ -18,7 +17,7 @@ public class IntegersFilter implements Filter {
 
     @Override
     public void apply(final String data) {
-        if (data.matches(regex)) {
+        if (data.matches(INTEGERS_REGEX)) {
             fileWrite.write(data);
         }
     }

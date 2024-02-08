@@ -8,8 +8,6 @@ import java.io.IOException;
 
 public class DoublesFilter implements Filter {
     private FileWrite fileWrite;
-    private final String regex = "-?\\d+(\\.\\d+)?(E[+-]?\\d+)?";
-    private final String integersRegex = "^\\d+$";
 
 
     public DoublesFilter(final Command command) {
@@ -21,7 +19,7 @@ public class DoublesFilter implements Filter {
 
     @Override
     public void apply(final String data) {
-        if (data.toUpperCase().matches(regex) && !data.matches(integersRegex)) {
+        if (data.toUpperCase().matches(DOUBLES_REGEX) && !data.matches(INTEGERS_REGEX)) {
             fileWrite.write(data);
         }
     }

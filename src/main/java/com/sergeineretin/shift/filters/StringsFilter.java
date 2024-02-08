@@ -8,8 +8,7 @@ import java.io.IOException;
 
 public class StringsFilter implements Filter {
     private FileWrite fileWrite;
-    private final String integersRegex = "^\\d+$";
-    private final String doublesRegex = "-?\\d+(\\.\\d+)?(E[+-]?\\d+)?";
+
 
     public StringsFilter(final Command command) {
         String pathName = command.getPath().toString() + "\\"
@@ -20,7 +19,7 @@ public class StringsFilter implements Filter {
 
     @Override
     public void apply(final String data) {
-        if (!data.toUpperCase().matches(integersRegex) && !data.toUpperCase().matches(doublesRegex)) {
+        if (!data.toUpperCase().matches(INTEGERS_REGEX) && !data.toUpperCase().matches(DOUBLES_REGEX)) {
             fileWrite.write(data);
         }
     }
