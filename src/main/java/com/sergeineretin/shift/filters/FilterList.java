@@ -30,7 +30,7 @@ public class FilterList implements Filter {
         if (data.matches(DOUBLES_REGEX) && !data.matches(INTEGERS_REGEX)) {
             statistic.update(Double.parseDouble(data));
         }
-        if (!data.matches(DOUBLES_REGEX) && !data.matches(INTEGERS_REGEX)) {
+        if (!data.matches(DOUBLES_REGEX) && !data.matches(INTEGERS_REGEX) && !data.isEmpty()) {
             statistic.update(data);
         }
     }

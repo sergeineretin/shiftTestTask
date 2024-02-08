@@ -19,7 +19,8 @@ public class StringsFilter implements Filter {
 
     @Override
     public void apply(final String data) {
-        if (!data.toUpperCase().matches(INTEGERS_REGEX) && !data.toUpperCase().matches(DOUBLES_REGEX)) {
+        if (!data.toUpperCase().matches(INTEGERS_REGEX) && !data.toUpperCase().matches(DOUBLES_REGEX)
+                && !data.isEmpty()) {
             fileWrite.write(data);
         }
     }
